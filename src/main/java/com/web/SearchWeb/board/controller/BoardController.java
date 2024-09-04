@@ -75,7 +75,7 @@ public class BoardController {
      *  게시글 목록 조회(검색어, 최신순/인기순)
      */
     @GetMapping("/board")
-    public String board(@RequestParam(defaultValue = "Newest") String sort,
+    public String board(@RequestParam(defaultValue = "newest") String sort,
                         @RequestParam(value = "query", required = false) String query,
                         @AuthenticationPrincipal UserDetails userDetails,
                         Model model){
@@ -95,6 +95,7 @@ public class BoardController {
 
         model.addAttribute("boards", boards);
         model.addAttribute("hashtagsList", hashtagsList);
+        model.addAttribute("sort", sort);
         return "board/board";
     }
 
