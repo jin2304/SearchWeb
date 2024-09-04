@@ -25,7 +25,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * 코드 작성자:
+ *  - 서진영(jin2304)
+ *
+ * 코드 설명:
+ *  - BoardController는 게시판 및 게시글 관련 기능을 처리하는 컨트롤러
+ *
+ * 코드 주요 기능:
+ *  - 게시글 등록, 게시글 목록 조회(검색어, 최신순/인기순), 게시글 단일(상세) 조회, 게시글 수정, 게시글 삭제
+ *  - 게시글 좋아요/북마크 추가 및 취소
+ *
+ * 코드 작성일:
+ *  - 2024.08.24 ~ 2024.09.05
+ */
 @Controller
 public class BoardController {
 
