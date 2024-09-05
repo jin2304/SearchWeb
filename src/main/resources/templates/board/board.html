@@ -29,6 +29,18 @@
     </div>
 
 
+    <!-- 검색 결과 개수 표시 -->
+    <div th:if="${resultCount != null && resultCount > 0 && query != null && !query.isEmpty()}" class="search-result bg-blue-100 rounded-xl px-5 py-2 font-semibold text-blue-800 mb-5">
+        검색 결과: <span class="font-bold" th:text="${resultCount}">0</span>개
+    </div>
+
+    <!-- 검색 결과 없을 때 메시지 표시 -->
+    <div th:if="${resultCount != null && resultCount == 0 && query != null && !query.isEmpty()}" class="search-result bg-red-100 rounded-xl px-5 py-2 font-semibold text-red-800 mb-5">
+        "<span th:text="${query}"></span>"에 대한 검색 결과가 없습니다.
+    </div>
+
+
+
     <!-- 카테고리 바 -->
     <div class="mb-4">
         <div class="p-4 pb-0">

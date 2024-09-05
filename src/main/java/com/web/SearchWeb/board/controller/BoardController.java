@@ -98,6 +98,7 @@ public class BoardController {
         model.addAttribute("sort", sort);
         model.addAttribute("postType", postType);
         model.addAttribute("query", query);
+        model.addAttribute("resultCount", boards.size());
         return "board/board";
     }
 
