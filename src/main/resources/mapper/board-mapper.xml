@@ -24,6 +24,17 @@
                 OR
                 description LIKE CONCAT('%', #{query}, '%'))
             </if>
+
+            <!-- 게시글 타입 선택 -->
+            <!-- 웹사이트 공유 필터링 (url이 존재하는 경우만) -->
+            <if test="postType == 'website'">
+                AND url IS NOT NULL
+            </if>
+            <!-- 질문 필터링 (url이 존재하지 않는 경우만) -->
+            <if test="postType == 'question'">
+                AND url IS NULL
+            </if>
+
         </where>
         <!-- 정렬 조건 -->
         <if test="sort != null">

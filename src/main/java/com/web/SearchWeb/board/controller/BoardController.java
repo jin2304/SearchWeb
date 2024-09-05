@@ -72,14 +72,14 @@ public class BoardController {
 
 
     /**
-     *  게시글 목록 조회(검색어, 최신순/인기순)
+     *  게시글 목록 조회(검색어, 최신순/인기순, 게시글타입 필터링)
      */
     @GetMapping("/board")
     public String board(@RequestParam(defaultValue = "newest") String sort,
                         @RequestParam(value = "query", required = false) String query,
+                        @RequestParam(defaultValue = "all") String postType,
                         @AuthenticationPrincipal UserDetails userDetails,
                         Model model){
-
         // 로그인된 사용자 정보를 Model에 추가
         if (userDetails != null) {
             String username = userDetails.getUsername();
@@ -88,7 +88,7 @@ public class BoardController {
         }
 
 
-        Map<String, Object> boardData = boardservice.selectBoardList(sort, query);
+        Map<String, Object> boardData = boardservice.selectBoardList(sort, query, postType);
         List<Board> boards = (List<Board>) boardData.get("boards");
         List<String[]> hashtagsList = (List<String[]>) boardData.get("hashtagsList");
 
@@ -96,6 +96,7 @@ public class BoardController {
         model.addAttribute("boards", boards);
         model.addAttribute("hashtagsList", hashtagsList);
         model.addAttribute("sort", sort);
+        model.addAttribute("postType", postType);
         return "board/board";
     }
 

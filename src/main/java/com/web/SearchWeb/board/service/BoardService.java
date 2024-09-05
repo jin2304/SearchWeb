@@ -46,8 +46,8 @@ public class BoardService {
     /**
      *  게시글 목록 조회(검색어, 최신순/인기순)
      */
-    public Map<String, Object> selectBoardList(String sort, String query) {
-        List<Board> boards = boardDao.selectBoardList(query, sort);
+    public Map<String, Object> selectBoardList(String sort, String query, String postType) {
+        List<Board> boards = boardDao.selectBoardList(query, sort, postType);
         List<String[]> hashtagsList = new ArrayList<>();
 
         // 각 Board 객체의 해시태그를 배열로 변환하고, 리스트에 추가
