@@ -19,22 +19,14 @@
 <!-- 게시판 목록 -->
 <main class="bg-white rounded-lg shadow-lg p-6 w-full max-w-3xl h-full flex flex-col" style="margin-left: 223px; margin-top: 80px;min-height: 100vh;">
 
-    <!-- 글 작성 섹션 (로그인된 경우) -->
-    <div th:if="${#authorization.expression('isAuthenticated()')}" class="flex items-center border border-gray-300 rounded-full bg-gray-100 p-2 w-full mb-6">
-        <i class="fas fa-pencil-alt text-gray-500 ml-3"></i>
-        <input type="text" placeholder="유용한 웹사이트를 공유하거나, 필요한 웹사이트를 질문해 보세요!"
-               class="flex-grow bg-transparent p-2 focus:outline-none text-gray-600 ml-2" readonly
-               onclick="openSelectPopup()">
+    <!-- 검색바 -->
+    <div class="w-full max-w-3xl mx-auto mb-4">
+        <form action="#" method="GET" class="flex items-center border border-gray-300 rounded-full bg-gray-100 p-1 w-full">
+            <i class="fas fa-search text-gray-500 ml-3"></i>
+            <input type="text" name="query" placeholder="검색" th:value="${query}" class="flex-grow bg-transparent p-2 focus:outline-none text-gray-600 ml-2" required>
+            <button type="submit" class="hidden"></button>
+        </form>
     </div>
-
-    <!-- 글 작성 섹션 (로그인되지 않은 경우) -->
-    <div th:if="${#authorization.expression('!isAuthenticated()')}" class="flex items-center border border-gray-300 rounded-full bg-gray-100 p-2 w-full mb-6">
-        <i class="fas fa-pencil-alt text-gray-500 ml-3"></i>
-        <input type="text" placeholder="유용한 웹사이트를 공유하거나, 필요한 웹사이트를 질문해 보세요!"
-               class="flex-grow bg-transparent p-2 focus:outline-none text-gray-600 ml-2" readonly
-               onclick="window.location.href='/login'">
-    </div>
-
 
 
     <!-- 카테고리 바 -->
@@ -87,6 +79,33 @@
                     </a>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- 글 작성 섹션 -->
+    <div class="w-full max-w-3xl mx-auto px-4">
+        <!-- 글 작성 섹션 (로그인된 경우) -->
+        <div th:if="${#authorization.expression('isAuthenticated()')}" class="relative mb-6">
+            <form class="relative">
+                <input type="text" placeholder="유용한 웹사이트를 공유하거나, 필요한 웹사이트를 질문해 보세요!"
+                       class="w-full pl-10 pr-4 py-2 bg-gray-100 rounded-full text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-purple-500 transition-colors duration-200"
+                       readonly onclick="openSelectPopup()">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i class="fas fa-pencil-alt text-gray-500"></i>
+                </div>
+            </form>
+        </div>
+
+        <!-- 글 작성 섹션 (로그인되지 않은 경우) -->
+        <div th:if="${#authorization.expression('!isAuthenticated()')}" class="relative mb-6">
+            <form class="relative">
+                <input type="text" placeholder="게시글 작성하기"
+                       class="w-full pl-10 pr-4 py-2 bg-gray-100 rounded-full text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-purple-500 transition-colors duration-200"
+                       readonly onclick="window.location.href='/login'">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i class="fas fa-pencil-alt text-gray-500"></i>
+                </div>
+            </form>
         </div>
     </div>
 

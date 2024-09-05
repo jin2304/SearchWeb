@@ -97,6 +97,7 @@ public class BoardController {
         model.addAttribute("hashtagsList", hashtagsList);
         model.addAttribute("sort", sort);
         model.addAttribute("postType", postType);
+        model.addAttribute("query", query);
         return "board/board";
     }
 
