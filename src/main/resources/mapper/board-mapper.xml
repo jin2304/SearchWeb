@@ -93,7 +93,7 @@
 
     <!-- 게시글 조회수 증가 -->
     <update id="incrementViewCount">
-        UPDATE Board
+        UPDATE board
         SET views_count = views_count + 1
         WHERE boardId = #{boardId}
     </update>
@@ -101,7 +101,7 @@
 
     <!-- 게시글 좋아요 증가 -->
     <update id="incrementLikeCount">
-        UPDATE Board
+        UPDATE board
         SET likes_count = likes_count + 1
         WHERE boardId = #{boardId}
     </update>
@@ -109,7 +109,7 @@
 
     <!-- 게시글 좋아요 감소 -->
     <update id="decrementLikeCount">
-        UPDATE Board
+        UPDATE board
         SET likes_count = likes_count - 1
         WHERE boardId = #{boardId}
     </update>
@@ -117,7 +117,7 @@
 
     <!-- 게시글 댓글 수 증가 -->
     <update id="incrementCommentCount">
-        UPDATE Board
+        UPDATE board
         SET comments_count = comments_count + 1
         WHERE boardId = #{boardId}
     </update>
@@ -125,7 +125,7 @@
 
     <!-- 게시글 댓글 수 감소 -->
     <update id="decrementCommentCount">
-        UPDATE Board
+        UPDATE board
         SET comments_count = comments_count - 1
         WHERE boardId = #{boardId}
     </update>
