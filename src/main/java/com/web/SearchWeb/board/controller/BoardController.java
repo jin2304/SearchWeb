@@ -57,14 +57,10 @@ public class BoardController {
 
 
     /**
-     *  게시글 등록(
+     *  게시글 등록
      */
     @PostMapping("/board/{memberId}/post")
     public String insertBoard(@PathVariable int memberId, BoardDto boardDto){
-
-        System.out.println("memberId: " + memberId);
-        System.out.println("boardDto: " + boardDto);
-
         int result = boardservice.insertBoard(memberId, boardDto);
         return "redirect:/board";
     }
