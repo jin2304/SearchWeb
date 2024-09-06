@@ -811,9 +811,20 @@
             $('#bookmarkButton').click(function(event) {
                 event.preventDefault();  // 기본 클릭 동작을 막습니다.
 
+                // 로그인한 사용자의 ID를 서버에서 가져온 후 변수로 할당
+                const metaTag = document.querySelector('meta[name="loginMemberId"]');
+                const loginMemberId = metaTag ? metaTag.getAttribute('content') : null;
+
+
+                // 로그인 여부 확인
+                if (!loginMemberId) {
+                    alert('로그인이 필요합니다.');
+                    window.location.href = "/login";  // 로그인 페이지로 리다이렉트
+                    return;
+                }
+
                 // 현재 페이지의 URL 가져오기
                 const currentUrl = window.location.href;
-
                 const boardUrl = [[ ${board.url} ]]
                 const boardSummary = [[ ${board.summary} ]]
                 const boardDescription = [[ ${board.description} ]]
@@ -825,7 +836,7 @@
                 const bookmarkSummary = boardSummary ? boardSummary : boardDescription;
 
                 const bookmarkData = {
-                    member_memberId: [[ ${board.member_memberId} ]],
+                    member_memberId: loginMemberId,
                     board_boardId: [[ ${board.boardId} ]],
                     name: [[ ${board.title} ]],  // 웹사이트 이름
                     url: bookmarkUrl,  // 웹사이트 URL 또는 현재 페이지 URL
@@ -834,7 +845,7 @@
 
                 // AJAX 요청 보내기
                 $.ajax({
-                    url: "/board/" + [[ ${board.boardId} ]] + "/bookmark/" + [[ ${board.member_memberId} ]],
+                    url: "/board/" + [[ ${board.boardId} ]] + "/bookmark/" + loginMemberId,
                     type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(bookmarkData),  // 자바스크립트 객체를 JSON 문자열로 변환
