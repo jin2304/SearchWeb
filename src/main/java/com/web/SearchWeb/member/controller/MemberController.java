@@ -77,7 +77,9 @@ public class MemberController {
             return "redirect:/join";
         }
 
+        // 회원가입 성공 처리
         memberService.joinProcess(member);
+        redirectAttributes.addFlashAttribute("message", "회원가입이 성공적으로 완료되었습니다.");
         return "redirect:/login";
     }
 
