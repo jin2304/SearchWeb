@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .formLogin((auth) -> auth
                         .loginPage("/login")
                         .loginProcessingUrl("/loginProc")
-                        .defaultSuccessUrl("/mainList") // 로그인 성공 후 메인페이지로 이동
+                        .successHandler(customAuthenticationSuccessHandler()) // 커스텀 성공 핸들러 추가
                         .failureHandler(customAuthenticationFailureHandler()) // 커스텀 실패 핸들러 추가
                         .permitAll()
                 );
@@ -83,6 +83,11 @@ public class SecurityConfig {
     @Bean
     public CustomAuthenticationFailureHandler customAuthenticationFailureHandler() {
         return new CustomAuthenticationFailureHandler();
+    }
+
+    @Bean
+    public CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler() {
+        return new CustomAuthenticationSuccessHandler();
     }
 
 }
