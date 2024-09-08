@@ -19,6 +19,13 @@
 <div class="flex justify-center items-center h-screen bg-gray-100">
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
 
+        <!-- 메시지를 alert으로 출력 -->
+        <span th:if="${message}">
+            <script th:inline="javascript">
+                alert([[${message}]]);
+            </script>
+        </span>
+
         <h1 class="text-3xl font-bold mb-6 text-gray-900">로그인</h1>
 
         <!-- 로그인 폼 -->
