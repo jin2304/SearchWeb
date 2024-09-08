@@ -454,6 +454,16 @@
         </form>
 
 
+        <!-- 로그인 유도 -->
+        <div th:if="${#authorization.expression('!isAuthenticated()')}" class="mt-12 mb-16 text-center">
+            <p class="text-gray-600">
+                댓글을 남기려면
+                <a id="loginLink" class="text-indigo-600 font-semibold hover:underline">로그인</a>
+                이 필요합니다.
+            </p>
+        </div>
+
+
         <!-- 댓글 목록 -->
         <div id="commentsContainer" class="mt-6">
             <!-- 댓글 리스트가 여기 표시됩니다 -->
@@ -509,6 +519,17 @@
 
 
     <script th:inline="javascript">
+
+        /**
+         *  로그인 이벤트 리스너 추가
+         */
+        document.addEventListener("DOMContentLoaded", function() {
+            const currentUrl = window.location.href;
+            const loginLink = document.getElementById("loginLink");
+            loginLink.href = `/login?redirect=` + encodeURIComponent(currentUrl);  // 로그인 URL에 redirect 파라미터 추가
+        });
+
+
         /**
          *  게시글 좋아요 추가/취소
          */
@@ -524,7 +545,9 @@
                     success: function(data) {
                         if (data.error) {
                             // 로그인되지 않은 경우, 로그인 페이지로 리디렉션
-                            window.location.href = data.redirectUrl;
+                            window.location.href = "/login?redirect=" + encodeURIComponent(window.location.href);
+
+
                         } else {
                             // 로그인된 경우, 상태에 따라 좋아요 업데이트
                             if (data.isLiked) {
@@ -575,7 +598,7 @@
             } catch (error) {
                 if (error.status === 401) {
                     alert("로그인이 필요합니다.");
-                    window.location.href = "/login"; // 로그인 페이지로 리다이렉트
+                    window.location.href = "/login?redirect=" + encodeURIComponent(window.location.href);
                 } else {
                     console.error("오류 발생:", error);
                 }
@@ -869,7 +892,7 @@
                     error: function(xhr, status, error) { // 요청이 실패했을 때 실행
                         if (xhr.status === 401) { // 401 Unauthorized 상태일 때
                             alert('로그인이 필요합니다.');
-                            window.location.href = "/login"; // 로그인 페이지로 리다이렉트
+                            window.location.href = "/login?redirect=" + encodeURIComponent(window.location.href);
                         } else {
                             console.error('Error:', error);
                             alert('북마크를 추가하는 중 오류가 발생했습니다.');
@@ -881,10 +904,6 @@
     </script>
 
 
-    <!-- 로그인 유도 -->
-    <div class="mt-12 text-center">
-        <p class="text-gray-600">댓글을 남기려면 <a href="/login" class="text-indigo-600 font-semibold hover:underline">로그인</a>이 필요합니다.</p>
-    </div>
 
 </main>
 
