@@ -50,6 +50,13 @@
     </select>
 
 
+    <!-- 게시글 조회(회원번호로 조회)  -->
+    <select id="selectBoardListByMemberId" resultType="com.web.SearchWeb.board.domain.Board">
+        SELECT * FROM board
+        where member_memberId = #{memberId}
+    </select>
+
+
     <!-- 게시글 단일 조회 -->
     <select id="selectBoard" resultType="com.web.SearchWeb.board.domain.Board">
         SELECT * FROM board
@@ -69,6 +76,17 @@
         WHERE
         boardId = #{boardId}
     </update>
+
+
+    <!-- 게시글 수정 (회원정보 수정) -->
+    <update id="updateBoardProfile" parameterType="Map">
+        update board
+        SET
+        job = #{job},
+        major = #{major}
+        WHERE boardId = #{boardId}
+    </update>
+
 
 
     <!-- 게시글 삭제 -->
