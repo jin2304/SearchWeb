@@ -37,6 +37,14 @@ public class MybatisBoardDao implements BoardDao{
 
 
     /**
+     *  게시글 목록 조회(회원번호로 조회)
+     */
+    public List<Board> selectBoardListByMemberId(int memberId) {
+        return mapper.selectBoardListByMemberId(memberId);
+    }
+
+
+    /**
      *  게시글 단일 조회
      */
     public Board selectBoard(int boardId) {
@@ -49,6 +57,14 @@ public class MybatisBoardDao implements BoardDao{
      */
     public int updateBoard(int boardId, BoardDto boardDto){
         return mapper.updateBoard(boardId, boardDto);
+    }
+
+
+    /**
+     *  게시글 수정(회원정보 수정)
+     */
+    public int updateBoardProfile(int boardId, String job, String major){
+        return mapper.updateBoardProfile(boardId, job, major);
     }
 
 
