@@ -70,19 +70,19 @@
         cursor: pointer;
         transition: color 0.3s ease;
         display: none;
+        cursor: pointer;
+        user-select: none;
     }
 
     .website-card:hover .bookmark-icon {
         display: block;
     }
 
-    .bookmark-icon:hover, .bookmark-icon.active {
-        color: #fbbf24;
-    }
 
     .bookmark-icon.active {
         display: block;
         color: #fbbf24;
+        transition: color 0.3s ease-in-out;
     }
 
     .search-result {
@@ -323,7 +323,6 @@
                 url: card.getAttribute('data-url'),                      // 웹사이트 URL
                 description: card.getAttribute('data-description')       // 웹사이트 설명
             };
-            console.log("bookmarkData" , bookmarkData);
 
             // 북마크 하지 않았다면 북마크 추가, 이미 북마크 했다면 북마크 삭제
             if (response == 0) {
