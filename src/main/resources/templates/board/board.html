@@ -378,7 +378,7 @@
                 <div>
                     <div th:if="${board.url}"         class="text-sm text-gray-700"><span th:text="${board.nickname}" class="font-bold">홍길동</span>님이 <span class="font-bold text-purple-600">웹사이트</span>를 공유했습니다.</div>
                     <div th:if="${board.url == null}" class="text-sm text-gray-700"><span th:text="${board.nickname}" class="font-bold">홍길동</span>님이 <span class="font-bold text-indigo-500">질문</span>을 남겼습니다.</div>
-                    <div class="text-sm text-gray-500">
+                    <div class="text-xs text-gray-500">
                         <span th:text="${board.job}">Backend developer</span>,
                         <span th:text="${board.major}">컴퓨터공학</span> •
                         <span th:text="${board.created_date}">약 2시간 전</span>
