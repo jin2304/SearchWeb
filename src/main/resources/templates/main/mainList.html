@@ -29,7 +29,7 @@
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         transition: all 0.3s ease;
         overflow: hidden;
-        height: 180px;
+        height: 240px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -82,7 +82,6 @@
     .bookmark-icon.active {
         display: block;
         color: #fbbf24;
-        transition: color 0.3s ease-in-out;
     }
 
     .search-result {
@@ -111,6 +110,14 @@
         background-color: #8352f5;
         color: white;
     }
+
+    /* 서브카테고리 텍스트 스타일 */
+    .website-card-body p.text-sm.text-indigo-600 {
+        font-size: 0.875rem; /* 글자 크기 설정 */
+        color: #5a67d8; /* 인디고 색상 */
+        margin-top: 8px; /* 위쪽 여백 설정 */
+    }
+
 </style>
 <body class="bg-gray-100">
 <!-- 메뉴바 fragment 사용 -->
@@ -149,11 +156,11 @@
                         <a href="?category=IT" class="category-btn px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-full shadow-md border border-gray-300 transition duration-300 ease-in-out hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                             <i class="fas fa-code mr-2"></i> IT
                         </a>
-                        <a href="?category=Design" class="category-btn px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-full shadow-md border border-gray-300 transition duration-300 ease-in-out hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                            <i class="fas fa-paint-brush mr-2"></i> Design
-                        </a>
                         <a href="?category=AI" class="category-btn px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-full shadow-md border border-gray-300 transition duration-300 ease-in-out hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                             <i class="fas fa-robot mr-2"></i> AI
+                        </a>
+                        <a href="?category=Design" class="category-btn px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-full shadow-md border border-gray-300 transition duration-300 ease-in-out hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                            <i class="fas fa-paint-brush mr-2"></i> Design
                         </a>
                         <a href="?category=Icon" class="category-btn px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-full shadow-md border border-gray-300 transition duration-300 ease-in-out hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                             <i class="fas fa-icons mr-2"></i> Icon
@@ -172,7 +179,7 @@
                         </a>
                     </div>
 
-                    <div class="flex items-center space-x-2">
+                   <!-- <div class="flex items-center space-x-2">
                         <button class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-full shadow-md border border-gray-300 transition duration-300 ease-in-out hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"></path>
@@ -185,7 +192,7 @@
                             </svg>
                             최신
                         </button>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>
@@ -229,15 +236,27 @@
                         <!-- 북마크(즐겨찾기) -->
                         <i class="bookmark-icon fas fa-bookmark" th:onclick="|Bookmark(${l.websiteId})|"></i>
                     </div>
+
                     <div class="website-card-body">
+                        <!-- 해시태그 섹션 -->
+                        <div class="flex flex-wrap gap-1 mb-2">
+                            <span th:each="hashtag : ${l.subcategory.split(' ')}"
+                                  class="inline-block bg-gradient-to-r from-gray-400 to-gray-300 text-white rounded-full px-2 py-0.5 text-xs font-semibold">
+                                <span th:text="'#' + ${hashtag}">#해시태그</span>
+                            </span>
+                        </div>
+
                         <!-- 웹사이트 설명 -->
-                        <p class="text-xs text-gray-600" th:text="${l.description}">Website Description</p>
+                        <p class="text-xs text-gray-600 mt-3" th:text="${l.description}">Website Description</p>
+
+                        <!-- 방문 버튼 -->
                         <a th:href="${l.url}" target="_blank" class="visit-site-btn">
                             <i class="fas fa-external-link-alt mr-1"></i>Visit
                         </a>
                     </div>
+
                 </div>
-            </div>
+                </div>
         </div>
 </main>
 
