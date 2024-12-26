@@ -1,8 +1,8 @@
 package com.web.SearchWeb.config;
 
+import com.web.SearchWeb.member.service.CustomOAuth2UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,6 +11,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    private final CustomOAuth2UserService customOAuth2UserService;
+
+    public SecurityConfig(CustomOAuth2UserService customOAuth2UserService) {
+        this.customOAuth2UserService = customOAuth2UserService;
+    }
+
 
 
     @Bean
@@ -38,7 +45,7 @@ public class SecurityConfig {
         http
                 .formLogin((auth) -> auth
                         .loginPage("/login")
-                        .loginProcessingUrl("/loginProc")
+                        .loginProcessingUrl("/loginProc") //Spring Security가 제공하는 기본 인증 필터(UsernamePasswordAuthenticationFilter)를 통해 자동으로 로그인 요청을 처리
                         .successHandler(customAuthenticationSuccessHandler()) // 커스텀 성공 핸들러 추가
                         .failureHandler(customAuthenticationFailureHandler()) // 커스텀 실패 핸들러 추가
                         .permitAll()
@@ -83,8 +90,9 @@ public class SecurityConfig {
          *  소셜 로그인 설정
          */
         http
-                .oauth2Login(Customizer.withDefaults());
-
+                .oauth2Login((oauth2) -> oauth2
+                        .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
+                                .userService(customOAuth2UserService)));  // 소셜 로그인 인증 완료 후, 인증 서버에서 가져온 사용자 정보를 회원가입/로그인 하는 커스텀 서비스 설정.
         
 
         return http.build();
