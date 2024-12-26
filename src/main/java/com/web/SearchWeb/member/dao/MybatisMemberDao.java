@@ -26,6 +26,14 @@ public class MybatisMemberDao implements MemberDao {
         mapper.joinProcess(member);
     }
 
+    /**
+     *  소셜 회원가입
+     */
+    @Override
+    public void SocialjoinProcess(Member member) {
+        mapper.SocialjoinProcess(member);
+    }
+
 
     @Override
     public Member findByMemberId(int memberId) {
@@ -47,5 +55,14 @@ public class MybatisMemberDao implements MemberDao {
     @Override
     public int updateMember(int memberId, MemberUpdateDto memberUpdateDto) {
         return mapper.updateMember(memberId, memberUpdateDto);
+    }
+
+
+    /**
+     *  소셜 회원 수정
+     */
+    @Override
+    public int updateSocialMember(int memberId, Member member) {
+        return mapper.updateSocialMember(memberId, member);
     }
 }

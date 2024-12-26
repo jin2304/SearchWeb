@@ -9,6 +9,9 @@ public interface MemberDao {
     //회원가입
     public void joinProcess(MemberDto member);
 
+    //소셜 회원가입
+    public void SocialjoinProcess(Member member);
+
     //회원번호로 찾기
     public Member findByMemberId(int memberId);
 
@@ -17,4 +20,7 @@ public interface MemberDao {
 
     //회원 수정
     public int updateMember(int memberId, MemberUpdateDto memberUpdateDto);
+
+    //소셜 회원 수정
+    public int updateSocialMember(int memberId, Member member);
 }

@@ -15,6 +15,14 @@
     </insert>
 
 
+    <!-- 소셜 회원가입 -->
+    <insert id="SocialjoinProcess" parameterType="com.web.SearchWeb.member.domain.Member" useGeneratedKeys="true" keyProperty="memberId">
+        insert into
+        member (username, password, nickname, role, email)
+        VALUES(#{username}, #{password}, #{nickname}, #{role}, #{email})
+    </insert>
+
+
     <select id="findByMemberId" parameterType="int" resultType="com.web.SearchWeb.member.domain.Member">
         select * from member
         where memberId=#{memberId}
@@ -34,6 +42,20 @@
         job = #{memberUpdateDto.job},
         major = #{memberUpdateDto.major},
         summary = #{memberUpdateDto.summary}
+        WHERE
+        memberId = #{memberId}
+    </update>
+
+
+    <!-- 소셜 회원 수정 -->
+    <update id="updateSocialMember" parameterType="map">
+        update member
+        SET
+        username = #{member.username},
+        job = #{member.job},
+        major = #{member.major},
+        summary = #{member.summary},
+        email = #{member.email}
         WHERE
         memberId = #{memberId}
     </update>
