@@ -5,8 +5,8 @@ import com.web.SearchWeb.bookmark.domain.Bookmark;
 import com.web.SearchWeb.bookmark.dto.BookmarkCheckDto;
 import com.web.SearchWeb.bookmark.dto.BookmarkDto;
 import com.web.SearchWeb.bookmark.service.BookmarkService;
-import com.web.SearchWeb.main.domain.Website;
 import com.web.SearchWeb.main.service.MainService;
+import com.web.SearchWeb.member.dto.CustomOAuth2User;
 import com.web.SearchWeb.member.dto.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,23 +46,32 @@ public class BookmarkApiController {
      */
     @GetMapping("/bookmark/status/{websiteId}")
     public ResponseEntity<Integer> checkBookmark(@PathVariable final int websiteId){
-
-        //사용자 로그인 확인
+        // 현재 사용자의 Authentication 객체 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // 사용자가 로그인되어 있는지 확인
         if (authentication instanceof AnonymousAuthenticationToken) {
             //사용자가 로그인되지 않은 경우, 로그인 페이지로 리디렉션
-            System.out.println("로그인 되지 않았습니다");
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
                     .body(0); // 로그인되지 않음을 클라이언트에 반환
         }
 
-        // 사용자의 ID 가져오기
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        int MemberId = userDetails.getMemberId();
+        // 현재 로그인된 사용자의 정보 가져오기
+        int currentUserId = -1;
+        if (authentication.getPrincipal() instanceof CustomUserDetails) {
+            // 일반 로그인 사용자 처리
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            currentUserId = userDetails.getMemberId();
+
+        } else if (authentication.getPrincipal() instanceof CustomOAuth2User) {
+            // 소셜 로그인 사용자 처리
+            CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
+            currentUserId = oAuth2User.getMemberId();
+        }
 
         // 해당 유저가 해당 가게를 북마크했는지 여부를 서비스에서 확인하여 반환
-        BookmarkCheckDto bookmark = new BookmarkCheckDto(MemberId, websiteId);
+        BookmarkCheckDto bookmark = new BookmarkCheckDto(currentUserId, websiteId);
         int result = bookmarkService.checkBookmark(bookmark);
 
         return ResponseEntity.ok(result);

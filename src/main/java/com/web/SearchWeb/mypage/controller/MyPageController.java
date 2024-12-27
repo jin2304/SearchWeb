@@ -4,6 +4,7 @@ import com.web.SearchWeb.bookmark.domain.Bookmark;
 import com.web.SearchWeb.bookmark.dto.BookmarkDto;
 import com.web.SearchWeb.bookmark.service.BookmarkService;
 import com.web.SearchWeb.member.domain.Member;
+import com.web.SearchWeb.member.dto.CustomOAuth2User;
 import com.web.SearchWeb.member.dto.CustomUserDetails;
 import com.web.SearchWeb.member.dto.MemberUpdateDto;
 import com.web.SearchWeb.member.service.MemberService;
@@ -61,8 +62,18 @@ public class MyPageController {
         }
 
         // 현재 로그인된 사용자의 정보 가져오기
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        int currentUserId = userDetails.getMemberId();
+        int currentUserId = -1;
+        if (authentication.getPrincipal() instanceof CustomUserDetails) {
+            // 일반 로그인 사용자 처리
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            currentUserId = userDetails.getMemberId();
+
+        } else if (authentication.getPrincipal() instanceof CustomOAuth2User) {
+            // 소셜 로그인 사용자 처리
+            CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
+            currentUserId = oAuth2User.getMemberId();
+        }
+
 
         // 요청된 memberId와 현재 로그인된 사용자의 ID 비교
         if (currentUserId != memberId) {
