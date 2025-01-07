@@ -91,6 +91,8 @@ public class SecurityConfig {
          */
         http
                 .oauth2Login((oauth2) -> oauth2
+                        .loginPage("/login") // 사용자 정의 소셜 로그인 페이지 URL 설정
+                        .defaultSuccessUrl("/mainList") // 로그인 성공 후 이동할 URL
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                                 .userService(customOAuth2UserService)));  // 소셜 로그인 인증 완료 후, 인증 서버에서 가져온 사용자 정보를 회원가입/로그인 하는 커스텀 서비스 설정.
         
