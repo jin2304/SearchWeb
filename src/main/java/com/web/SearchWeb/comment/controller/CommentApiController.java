@@ -131,8 +131,8 @@ public class CommentApiController {
 
         if(comment.getMember_memberId() != loggedInMember.getMemberId()){
             return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body(response); // 401 Unauthorized 응답
+                    .status(HttpStatus.FORBIDDEN)
+                    .body(response); // 403 Forbidden 응답
         }
 
         commentService.updateComment(commentId, loggedInMember, commentDto);
@@ -179,8 +179,8 @@ public class CommentApiController {
 
         if(comment.getMember_memberId() != loggedInMember.getMemberId()){
             return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body(response); // 401 Unauthorized 응답
+                    .status(HttpStatus.FORBIDDEN)
+                    .body(response); // 403 Forbidden 응답
         }
 
         commentService.deleteComment(boardId, commentId);
